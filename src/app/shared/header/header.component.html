@@ -1,0 +1,26 @@
+<header class="absolute inset-x-0 top-0 z-50">
+  <nav class="flex items-center justify-between p-6 lg:px-8">
+    <div class="flex lg:flex-1">
+      <a routerLink="/" class="-m-1.5 p-1.5">
+        <img class="h-8 w-auto" src="https://appwiz.dev/assets/images/favicon.png" alt="logo">
+      </a>
+    </div>
+    <div class="flex lg:gap-x-12">
+      @if(user){
+        <a routerLink="/dashboard" class="text-sm font-semibold leading-6 text-gray-900">Welcome: {{user.name}}</a>
+      } @else {
+        <a routerLink="/" class="hidden lg:flex lg:flex-1 text-sm font-semibold leading-6 text-gray-900">Welcome</a>
+      }
+    </div>
+    @if(user){
+    <div class="flex flex-1 justify-end gap-5">
+      <a (click)="logout()" class="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-500 cursor-pointer">Logout</a>
+    </div>
+    } @else {
+      <div class="flex flex-1 justify-end gap-5">
+        <a routerLink="/register" class="text-sm font-semibold leading-6 text-gray-900">Register</a>
+        <a routerLink="/login" class="text-sm font-semibold leading-6 text-gray-900">Login</a>
+      </div>
+    }
+  </nav>
+</header>

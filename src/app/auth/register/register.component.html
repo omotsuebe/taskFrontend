@@ -1,0 +1,64 @@
+<div class="flex flex-col w-full pt-20">
+  <div class="lg:m-auto lg:px-96">
+    <!--sign in section-->
+    <div class="flex flex-col w-full relative">
+      <a routerLink="/" class="font-[500] text-blue-500 text-center">Home</a>
+      <div class="flex flex-col w-full bg-white dark:bg-gray-800 lg:rounded-3xl lg:p-8 p-4 mt-8 border">
+        <div class="flex flex-col lg:w-[464px] w-full ">
+          <div class="text-[20px] font-bold text-center tracking-[-2%] mt-2">Sign Up</div>
+          @if(successMsg){
+            <div class="text-green-600 font-[500] my-2 text-center">{{successMsg}}</div>
+          }
+          @if(errorMsg){
+            <div class="text-red-600 font-[500] my-2 text-center">{{errorMsg}}</div>
+          }
+          @if(isLoading){
+            <div class="mt-2">
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+          }
+          <form class="mt-8" (ngSubmit)="submitForm()" [formGroup]="loginForm" novalidate>
+            <div class="mb-3">
+              <label for="name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+              <input type="text" id="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  />
+              @if(hasError('name', 'required')){
+                <small class="text-red-500 text-xs">
+                  Please enter your name
+                </small>
+              }
+            </div>
+            <div class="mb-3">
+              <label for="email" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+              <input type="email" id="email" formControlName="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  />
+              @if(hasError('email', 'required')){
+                <small class="text-red-500 text-xs">
+                  Please enter your email
+                </small>
+              }
+            </div>
+            <div class="mb-4">
+              <label for="password" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+              <input type="password" id="password" formControlName="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+              @if(hasError('password', 'required')){
+                <small class="text-red-500 text-xs">
+                  Please enter your password
+                </small>
+              }
+            </div>
+            <div>
+              <button class="rounded-md bg-blue-600 px-3.5 py-2.5 text-white hover:bg-blue-500" type="submit" [disabled]="isLoading">
+                Sign Up
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--sign up section-->
+    <div class="flex flex-row justify-center items-center">
+      <div class="flex bg-white dark:bg-gray-800 lg:rounded-3xl py-4 px-8">
+        <div class="text-16 font-[500] text-gray-500">Already have an account?<a routerLink="/login" class="ml-2 font-[700] capitalize">Signup</a></div>
+      </div>
+    </div>
+  </div>
+</div>
