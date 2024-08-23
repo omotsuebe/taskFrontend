@@ -44,27 +44,10 @@ export class AuthService {
     return this.apiService.post('/auth/register', user);
   }
 
-  forgotPassword(user: any) {
-    return this.apiService.post('/auth/forgot-password', user);
-  }
-
-  resendVerification(user: any) {
-    return this.apiService.post('/auth/resend-verify', user);
-  }
-
-  processVerification(user: any) {
-    return this.apiService.post('/auth/verify-user', user);
-  }
-
-  processPassword(username: string, password: string, code: string) {
-    return this.apiService.post('/auth/reset-password', { username, password, code });
-  }
-
   // profile
   profile() {
     return this.apiService.get('/auth/profile');
   }
-
 
   // update profile
   updateProfile(user: any) {
