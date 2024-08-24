@@ -1,0 +1,79 @@
+<div class="flex mb-5">
+  <div>
+    <a (click)="openDialog([])"
+       class="w-full cursor-pointer px-4 py-2 bg-blue-500 text-white font-[500] rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      Create Task
+    </a>
+  </div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+  <div class="flex flex-col w-full p-6 bg-white rounded-lg shadow-md border">
+    <div class="task-container">
+      <p class="font-[500] text-lg text-green-700">Active Tasks<small class="text-gray-500 text-xs ml-2">Click on a task to edit/delete</small></p>
+      <div
+        cdkDropList
+        #taskList="cdkDropList"
+        [cdkDropListData]="taskActive"
+        [cdkDropListConnectedTo]="[doneList]"
+        class="task-list"
+        (cdkDropListDropped)="drop($event)">
+        @for (item of taskActive; track item; let index = $index) {
+          <div class="task-box" cdkDrag (click)="getTask(item)">
+            <div class="task-custom-placeholder" *cdkDragPlaceholder></div>
+            <div class="flex flex-row gap-3">
+              <div class="font-[500]">{{item.name}}</div>
+              <div class="">
+                <span class="bg-gray-100 py-1 px-2 rounded-lg mr-2">{{item.project_type}}</span>
+                @if(item.priority==='high'){
+                  <span class="bg-red-200 py-1 px-2 rounded-lg">{{item.priority}}</span>
+                } @else if (item.priority==='medium'){
+                  <span class="bg-amber-200 py-1 px-2 rounded-lg">{{item.priority}}</span>
+                } @else if (item.priority==='low'){
+                  <span class="bg-green-200 py-1 px-2 rounded-lg">{{item.priority}}</span>
+                }
+              </div>
+            </div>
+          </div>
+        } @empty {
+          <p class="text-gray-300 text-center pt-3">No tasks added yet</p>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col w-full p-6 bg-white rounded-lg shadow-md border">
+    <div class="task-container">
+      <p class="font-[500] text-lg text-amber-600">Completed Task</p>
+      <div
+        cdkDropList
+        #doneList="cdkDropList"
+        [cdkDropListData]="taskDone"
+        [cdkDropListConnectedTo]="[taskList]"
+        class="task-list"
+        (cdkDropListDropped)="drop($event)">
+        @for (item of taskDone; track item) {
+          <div class="task-box" cdkDrag (click)="getTask(item)">
+            <div class="task-custom-placeholder" *cdkDragPlaceholder></div>
+            <div class="flex flex-row gap-3">
+              <div class="text-gray-400">{{item.name}}</div>
+              <div class="text-gray-400">
+                <span class="bg-gray-100 py-1 px-2 rounded-lg mr-2">{{item.project_type}}</span>
+                @if(item.priority==='high'){
+                  <span class="bg-red-100 py-1 px-2 rounded-lg">{{item.priority}}</span>
+                } @else if (item.priority==='medium'){
+                  <span class="bg-amber-100 py-1 px-2 rounded-lg">{{item.priority}}</span>
+                } @else if (item.priority==='low'){
+                  <span class="bg-green-100 py-1 px-2 rounded-lg">{{item.priority}}</span>
+                }
+              </div>
+            </div>
+          </div>
+        }@empty {
+          <p class="text-gray-300 text-center pt-3">No completed tasks</p>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

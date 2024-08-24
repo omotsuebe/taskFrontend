@@ -1,0 +1,104 @@
+<div class="p-3 bg-white ">
+  <div class="flex flex-row w-full item-center">
+    <div class="w-full"><p class="font-bold text-xl">
+      @if(taskForm.value.id){
+        Update Task
+      } @else {
+        Create Task
+      }
+    </p></div>
+    <div class="flex w-full justify-end">
+      <svg class="w-6 h-6 text-gray-800 cursor-pointer" (click)="dialogClose()" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+      </svg>
+    </div>
+  </div>
+
+  @if(isLoading){
+    <div class="my-2">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+  }
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <!-- Task Name -->
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700 font-medium mb-2">Task Name</label>
+      <input
+        type="text"
+        formControlName="name"
+        id="name"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Enter task name"
+      />
+      @if(hasError('name', 'required')){
+        <small class="text-red-500 text-xs">
+          Please enter the task name
+        </small>
+      }
+    </div>
+
+    <!-- Project Type -->
+    <div class="mb-4">
+      <label for="project_type" class="block text-gray-700 font-medium mb-2">Project Type</label>
+      <select
+        id="project_type"
+        formControlName="project_type"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="development">Development</option>
+        <option value="design">Design</option>
+        <option value="marketing">Marketing</option>
+        <option value="deployment">Deployment</option>
+        <!-- Add more options as needed -->
+      </select>
+      @if(hasError('project_type', 'required')){
+        <small class="text-red-500 text-xs">
+          Please select the project type
+        </small>
+      }
+    </div>
+
+    <!-- Priority -->
+    <div class="mb-4">
+      <label for="priority" class="block text-gray-700 font-medium mb-2">Priority</label>
+      <select
+        id="priority"
+        formControlName="priority"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+      @if(hasError('priority', 'required')){
+        <small class="text-red-500 text-xs">
+          Please select priority
+        </small>
+      }
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-6">
+      <button
+        type="submit"
+        class="w-full px-4 py-3 bg-blue-500 text-white font-[500] cursor-pointer rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [disabled]="taskForm.invalid"
+      >
+        @if(taskForm.value.id){
+           Update Task
+        } @else {
+          Create Task
+        }
+      </button>
+    </div>
+  </form>
+  <!-- Delete Button -->
+  @if(taskForm.value.id){
+  <div class="mt-6">
+    <div (click)="deleteTask()"
+      class="w-full px-4 py-3 bg-red-500 text-center text-white font-[500] cursor-pointer rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+      Delete Task
+    </div>
+  </div>
+  }
+</div>
