@@ -4,7 +4,10 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgClass, NgIf} from "@angular/common";
 import {AuthService} from "@core/services/auth.service";
 import {MatProgressBar} from "@angular/material/progress-bar";
-
+/**
+ * Component for user login.
+ * Handles user authentication and form validation.
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -20,22 +23,33 @@ import {MatProgressBar} from "@angular/material/progress-bar";
 })
 export class LoginComponent implements OnInit{
 
-  loginForm!: FormGroup;
-  isLoading = false;
-  submitted = false;
-  errorMsg: any;
+  loginForm!: FormGroup; // Form group for the login form
+  isLoading = false; // Indicates if a request is in progress
+  submitted = false; // Indicates if the form has been submitted
+  errorMsg: any; // Holds error messages
 
+  /**
+   * Constructor for the LoginComponent.
+   * @param router - Router service for navigation.
+   * @param formBuilder - FormBuilder service for creating forms.
+   * @param authService - AuthService for handling authentication.
+   */
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authService: AuthService
   ) {}
 
+  /**
+   * Initializes the component by creating the login form.
+   */
   ngOnInit() {
-    this.createForm();
+    this.createForm(); // Set up the form on initialization
   }
 
+  /**
+   * Creates the login form with validation.
+   */
   private createForm() {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
@@ -43,6 +57,12 @@ export class LoginComponent implements OnInit{
     });
   }
 
+  /**
+   * Checks if a form control has an error.
+   * @param controlName - The name of the form control.
+   * @param errorName - The name of the error.
+   * @returns boolean - True if the control has the specified error, false otherwise.
+   */
   hasError = (controlName: string, errorName: string) => {
     if (this.submitted) {
       return this.loginForm.controls[controlName].hasError(errorName);
@@ -51,6 +71,10 @@ export class LoginComponent implements OnInit{
     }
   };
 
+  /**
+   * Handles form submission for login.
+   * Validates the form and processes login if valid.
+   */
   submitForm() {
     this.submitted = true;
     if (this.loginForm.invalid) {

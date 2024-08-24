@@ -12,6 +12,10 @@ import {
 import {Dialog, DialogModule} from '@angular/cdk/dialog';
 import {CreateTaskComponent} from "@app/task/create-task/create-task.component";
 
+/**
+ * Component for managing tasks with drag-and-drop functionality.
+ * This component allows users to reorder tasks and move them between different status categories (active and done).
+ */
 @Component({
   selector: 'app-mange-tasks',
   standalone: true,
@@ -20,21 +24,32 @@ import {CreateTaskComponent} from "@app/task/create-task/create-task.component";
   styleUrl: './mange-tasks.component.scss'
 })
 export class MangeTasksComponent implements OnInit{
-  isLoading = false;
-  tasks!: Task[];
-  taskActive: any;
-  taskDone: any;
-  task!: Task;
-  dialog = inject(Dialog);
+  isLoading = false; // Indicates if a request is in progress
+  tasks!: Task[]; // Array of tasks
+  taskActive: any; // Array of active tasks
+  taskDone: any; // Array of completed tasks
+  task!: Task; // Task to be edited or viewed
+  dialog = inject(Dialog); // Dialog service for opening task dialogs
 
+  /**
+   * Constructor for the MangeTasksComponent.
+   * @param taskService - The TaskService used to interact with task data.
+   */
   constructor(
     private taskService: TaskService,
   ) {}
 
+  /**
+   * Initializes the component by fetching the list of tasks.
+   */
   ngOnInit() {
     this.getTasks();
   }
 
+  /**
+   * Opens a dialog to create or edit a task.
+   * @param task - The task data to be passed to the dialog.
+   */
   openDialog(task: any) {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
       minWidth: '500px',
@@ -44,10 +59,14 @@ export class MangeTasksComponent implements OnInit{
       },
     });
     dialogRef.closed.subscribe(result => {
-      this.getTasks();
+      this.getTasks(); // Refresh tasks when the dialog is closed
     });
   }
 
+  /**
+   * Handles the drag-and-drop events to reorder or move tasks between lists.
+   * @param event - The CdkDragDrop event containing information about the drag-and-drop operation.
+   */
   drop(event: CdkDragDrop<string[]>) {
     const eventType = event.previousContainer === event.container ? 'reorder' : 'drop';
     if (eventType === 'reorder') {
@@ -80,6 +99,9 @@ export class MangeTasksComponent implements OnInit{
     }
   }
 
+  /**
+   * Fetches the list of tasks from the server.
+   */
   getTasks(){
     this.isLoading = true;
     this.taskService.getTasks().subscribe({
@@ -95,11 +117,14 @@ export class MangeTasksComponent implements OnInit{
     });
   }
 
+  /**
+   * Updates the tasks on the server after a drag-and-drop operation.
+   * @param tasks - The array of tasks to be updated.
+   */
   updateTasks(tasks: any){
     this.isLoading = true;
     this.taskService.updateTasks(tasks).subscribe({
       next: (data: any) => {
-        //this.tasks = data.data;
         console.log('done');
       },
       error: error => {
@@ -108,6 +133,10 @@ export class MangeTasksComponent implements OnInit{
     });
   }
 
+  /**
+   * Opens a dialog to create or edit a specific task.
+   * @param task - The task data to be passed to the dialog.
+   */
   getTask(task: Task) {
     this.task = task;
     this.openDialog(task);

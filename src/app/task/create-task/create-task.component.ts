@@ -17,36 +17,46 @@ import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
 })
 export class CreateTaskComponent implements OnInit {
 
-  task!: Task;
-  taskForm!: FormGroup;
-  isLoading = false;
-  submitted = false;
-  errorMsg: any;
-  successMsg: any;
-  isForm = false;
-  dialogRef = inject(DialogRef);
+  task!: Task; // Task data to be edited or created
+  taskForm!: FormGroup; // Reactive form group for task data
+  isLoading = false; // Indicates if a request is in progress
+  submitted = false; // Indicates if the form has been submitted
+  errorMsg: any; // Stores error messages
+  successMsg: any; // Stores success messages
+  isForm = false; // Indicates if the form is for editing or creating
+  dialogRef = inject(DialogRef); // Dialog reference for closing the dialog
 
-
+  /**
+   * Constructor for the CreateTaskComponent.
+   * @param formBuilder - The FormBuilder service to create reactive forms.
+   * @param taskService - The TaskService to interact with task data.
+   * @param data - The dialog data containing the task information.
+   */
   constructor(
     private formBuilder: FormBuilder,
     private taskService: TaskService,
     @Inject(DIALOG_DATA) public data: any
   ) {
-    this.task = this.data.task;
-    console.log(this.task);
+    this.task = this.data.task; // Initialize task from dialog data
   }
 
+  /**
+   * Initializes the component by setting up the form.
+   */
   ngOnInit() {
-    this.createForm();
+    this.createForm();// Create the form on initialization
   }
 
   dialogClose(){
     this.dialogRef.close();
   }
 
+  /**
+   * Creates the form group with initial values and validators.
+   */
   private createForm() {
     if(this.task) {
-      this.isForm = true;
+      // Set to true if editing an existing task
       this.taskForm = this.formBuilder.group({
         id: [this.task.id],
         status: [1],
@@ -66,6 +76,12 @@ export class CreateTaskComponent implements OnInit {
     }
   }
 
+  /**
+   * Checks for form control errors.
+   * @param controlName - The name of the form control.
+   * @param errorName - The error type to check.
+   * @returns True if there is an error, otherwise false.
+   */
   hasError = (controlName: string, errorName: string) => {
     if (this.submitted) {
       return this.taskForm.controls[controlName].hasError(errorName);
@@ -74,7 +90,10 @@ export class CreateTaskComponent implements OnInit {
     }
   };
 
-  // Submit the form
+  /**
+   * Handles form submission.
+   * Determines whether to create or update a task based on the form value.
+   */
   onSubmit() {
     if(this.taskForm.value.id){
       this.updateTask();
@@ -82,7 +101,9 @@ export class CreateTaskComponent implements OnInit {
       this.createTask();
     }
   }
-
+  /**
+   * Creates a new task.
+   */
   createTask() {
     this.submitted = true;
     this.isLoading = true;
@@ -107,7 +128,9 @@ export class CreateTaskComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
-
+  /**
+   * Updates an existing task.
+   */
   updateTask() {
     this.submitted = true;
     this.isLoading = true;
@@ -132,7 +155,9 @@ export class CreateTaskComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
-
+  /**
+   * Deletes the task.
+   */
   deleteTask(){
     this.isLoading = true;
     this.taskService.deleteTask(this.taskForm.value.id).subscribe({
