@@ -72,7 +72,6 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     } else {
-      console.log(this.registerForm.value);
       this.isLoading = true;
 
       this.authService.register(this.registerForm.value).subscribe({
@@ -82,7 +81,7 @@ export class RegisterComponent implements OnInit {
             this.successMsg = 'Registration successful.';
             setTimeout(() => {
               this.router.navigate(['/login']);
-            }, 3000); // 3000ms = 3 seconds
+            }, 2000); // 2000ms = 1 seconds
           } else {
             this.isLoading = false;
             this.errorMsg = 'Registration failed. Please try again.';
