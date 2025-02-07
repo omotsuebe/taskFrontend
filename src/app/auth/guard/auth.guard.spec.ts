@@ -14,7 +14,7 @@ describe('AuthGuard', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: Router, useValue: routerSpy },
-        { provide: authService, useValue: credentialsSpy }
+        { provide: AuthService, useValue: credentialsSpy }
       ]
     });
 
@@ -25,5 +25,6 @@ describe('AuthGuard', () => {
   it('should have a canActivate method', () => {
     expect(typeof AuthGuard).toBe('function');
   });
+  
   ///and more
 });

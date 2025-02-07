@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
   private authService = inject(AuthService);
 
 
-  loginForm!: FormGroup; // Form group for the registration form
+  registerForm!: FormGroup; // Form group for the registration form
   isLoading = false; // Indicates if a request is in progress
   submitted = false; // Indicates if the form has been submitted
   errorMsg: any; // Holds error messages
@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
    * Creates the registration form with validation.
    */
   private createForm() {
-    this.loginForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
    */
   hasError = (controlName: string, errorName: string) => {
     if (this.submitted) {
-      return this.loginForm.controls[controlName].hasError(errorName);
+      return this.registerForm.controls[controlName].hasError(errorName);
     } else {
       return false;
     }
@@ -69,13 +69,13 @@ export class RegisterComponent implements OnInit {
    */
   submitForm() {
     this.submitted = true;
-    if (this.loginForm.invalid) {
+    if (this.registerForm.invalid) {
       return;
     } else {
-      console.log(this.loginForm.value);
+      console.log(this.registerForm.value);
       this.isLoading = true;
 
-      this.authService.register(this.loginForm.value).subscribe({
+      this.authService.register(this.registerForm.value).subscribe({
         next: data => {
           if (data.result) {
             this.isLoading = false;

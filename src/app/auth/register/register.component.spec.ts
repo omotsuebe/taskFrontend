@@ -24,4 +24,25 @@ describe('RegisterComponent', () => {
   it('Register should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('Register should have a form', () => {
+    expect(component.registerForm).toBeTruthy();
+  });
+
+  it('Register should have a name field', () => {
+    expect(component.registerForm.controls['name']).toBeTruthy();
+  });
+
+  it('Register should have an email field', () => {
+    expect(component.registerForm.controls['email']).toBeTruthy();
+  });
+
+  it('Register should have a password field', () => {
+    expect(component.registerForm.controls['password']).toBeTruthy();
+  });
+
+  it('Register should have a submit button', () => {
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('button[type="submit"]')).toBeTruthy();
+  });
 });

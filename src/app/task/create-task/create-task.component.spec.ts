@@ -34,4 +34,9 @@ describe('CreateTaskComponent', () => {
   it('task should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('task should have a form', () => {
+    expect(component.taskForm).toBeTruthy();
+  });
+
 });

@@ -24,4 +24,22 @@ describe('LoginComponent', () => {
   it('Login should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('Login should have a form', () => {
+    expect(component.loginForm).toBeTruthy();
+  });
+
+  it('Login should have an email field', () => {
+    expect(component.loginForm.controls['email']).toBeTruthy();
+  });
+
+  it('Login should have a password field', () => {
+    expect(component.loginForm.controls['password']).toBeTruthy();
+  });
+
+  it('Login should have a submit button', () => {
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('button[type="submit"]')).toBeTruthy();
+  });
+
 });
