@@ -1,4 +1,4 @@
-import {Component, inject, Inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TaskService} from "@core/services/task.service";
 import {Task} from "@core/interfaces/Task";
@@ -16,6 +16,10 @@ import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
   styleUrl: './create-task.component.scss'
 })
 export class CreateTaskComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private taskService = inject(TaskService);
+  data = inject(DIALOG_DATA);
+
 
   task!: Task; // Task data to be edited or created
   taskForm!: FormGroup; // Reactive form group for task data
@@ -32,11 +36,7 @@ export class CreateTaskComponent implements OnInit {
    * @param taskService - The TaskService to interact with task data.
    * @param data - The dialog data containing the task information.
    */
-  constructor(
-    private formBuilder: FormBuilder,
-    private taskService: TaskService,
-    @Inject(DIALOG_DATA) public data: any
-  ) {
+  constructor() {
     this.task = this.data.task; // Initialize task from dialog data
   }
 
@@ -109,7 +109,7 @@ export class CreateTaskComponent implements OnInit {
     this.isLoading = true;
     if (this.taskForm.valid) {
       this.taskService.createTask(this.taskForm.value).subscribe({
-        next: (data: any) => {
+        next: data => {
           if (data.result) {
             this.isLoading = false;
             this.successMsg = 'Task created successfully.';
@@ -136,7 +136,7 @@ export class CreateTaskComponent implements OnInit {
     this.isLoading = true;
     if (this.taskForm.valid) {
       this.taskService.updateTask(this.taskForm.value.id, this.taskForm.value).subscribe({
-        next: (data: any) => {
+        next: data => {
           if (data.result) {
             this.isLoading = false;
             this.successMsg = 'Task update successfully.';
@@ -161,7 +161,7 @@ export class CreateTaskComponent implements OnInit {
   deleteTask(){
     this.isLoading = true;
     this.taskService.deleteTask(this.taskForm.value.id).subscribe({
-      next: (data: any) => {
+      next: data => {
         this.isLoading = false;
         this.dialogClose();
       },

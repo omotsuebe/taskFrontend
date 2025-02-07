@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ApiService } from './api.service';
@@ -7,9 +7,9 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class TaskService {
-  private readonly endpoint = '/tasks';
+  private apiService = inject(ApiService);
 
-  constructor(private apiService: ApiService) {}
+  private readonly endpoint = '/tasks';
 
   // Get a list of tasks or a single task by ID
   getTasks(params: HttpParams = new HttpParams()): Observable<any> {

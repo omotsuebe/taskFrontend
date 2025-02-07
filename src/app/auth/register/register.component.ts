@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "@core/services/auth.service";
@@ -21,24 +21,16 @@ import {MatProgressBar} from "@angular/material/progress-bar";
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit {
+  private router = inject(Router);
+  private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+
 
   loginForm!: FormGroup; // Form group for the registration form
   isLoading = false; // Indicates if a request is in progress
   submitted = false; // Indicates if the form has been submitted
   errorMsg: any; // Holds error messages
-  successMsg: any; // Holds success messages
-
-  /**
-   * Constructor for the RegisterComponent.
-   * @param router - Router service for navigation.
-   * @param formBuilder - FormBuilder service for creating forms.
-   * @param authService - AuthService for handling authentication.
-   */
-  constructor(
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private authService: AuthService
-  ) {}
+  successMsg: any;
 
   /**
    * Initializes the component by creating the registration form.

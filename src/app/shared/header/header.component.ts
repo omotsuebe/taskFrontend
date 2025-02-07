@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {User} from "@core/interfaces/User";
 import {AuthService} from "@core/services/auth.service";
@@ -15,13 +15,11 @@ import {MatProgressBar} from "@angular/material/progress-bar";
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit{
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
   isLoading = false;
   user!: User;
-
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
 
   ngOnInit() {
     this.authService.currentUser.subscribe(data => {

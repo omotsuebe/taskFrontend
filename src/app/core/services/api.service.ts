@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@env/environment';
@@ -6,8 +6,8 @@ import { environment } from '@env/environment';
   providedIn: 'root',
 })
 export class ApiService {
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.http.get(`${environment.serverUrl}${path}`, { params });

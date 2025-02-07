@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, RouterLink} from "@angular/router";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {NgClass, NgIf} from "@angular/common";
 import {AuthService} from "@core/services/auth.service";
 import {MatProgressBar} from "@angular/material/progress-bar";
 /**
@@ -14,31 +13,21 @@ import {MatProgressBar} from "@angular/material/progress-bar";
   imports: [
     RouterLink,
     ReactiveFormsModule,
-    NgClass,
-    NgIf,
     MatProgressBar
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
+  private router = inject(Router);
+  private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+
 
   loginForm!: FormGroup; // Form group for the login form
   isLoading = false; // Indicates if a request is in progress
   submitted = false; // Indicates if the form has been submitted
-  errorMsg: any; // Holds error messages
-
-  /**
-   * Constructor for the LoginComponent.
-   * @param router - Router service for navigation.
-   * @param formBuilder - FormBuilder service for creating forms.
-   * @param authService - AuthService for handling authentication.
-   */
-  constructor(
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private authService: AuthService
-  ) {}
+  errorMsg: any;
 
   /**
    * Initializes the component by creating the login form.

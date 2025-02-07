@@ -24,20 +24,14 @@ import {CreateTaskComponent} from "@app/task/create-task/create-task.component";
   styleUrl: './mange-tasks.component.scss'
 })
 export class MangeTasksComponent implements OnInit{
+  private taskService = inject(TaskService);
+
   isLoading = false; // Indicates if a request is in progress
   tasks!: Task[]; // Array of tasks
   taskActive: any; // Array of active tasks
   taskDone: any; // Array of completed tasks
   task!: Task; // Task to be edited or viewed
-  dialog = inject(Dialog); // Dialog service for opening task dialogs
-
-  /**
-   * Constructor for the MangeTasksComponent.
-   * @param taskService - The TaskService used to interact with task data.
-   */
-  constructor(
-    private taskService: TaskService,
-  ) {}
+  dialog = inject(Dialog);
 
   /**
    * Initializes the component by fetching the list of tasks.

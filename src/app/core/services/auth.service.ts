@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, catchError, distinctUntilChanged, Observable, of, tap, throwError } from 'rxjs';
 import { ApiService } from '@app/core/services/api.service';
 import { CredentialsService } from '@app/core/services/credentials.service';
@@ -12,14 +12,12 @@ import { User, LoginModel } from '../interfaces/User';
   providedIn: 'root',
 })
 export class AuthService {
+  private credentialsService = inject(CredentialsService);
+  private apiService = inject(ApiService);
+
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
-
-  constructor(
-    private credentialsService: CredentialsService,
-    private apiService: ApiService,
-  ) { }
 
   /**
    * Authenticates the user.
