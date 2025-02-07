@@ -17,11 +17,10 @@ import {CreateTaskComponent} from "@app/task/create-task/create-task.component";
  * This component allows users to reorder tasks and move them between different status categories (active and done).
  */
 @Component({
-  selector: 'app-mange-tasks',
-  standalone: true,
-  imports: [CdkDropList, CdkDrag, DialogModule, CdkDragPlaceholder],
-  templateUrl: './mange-tasks.component.html',
-  styleUrl: './mange-tasks.component.scss'
+    selector: 'app-mange-tasks',
+    imports: [CdkDropList, CdkDrag, DialogModule, CdkDragPlaceholder],
+    templateUrl: './mange-tasks.component.html',
+    styleUrl: './mange-tasks.component.scss'
 })
 export class MangeTasksComponent implements OnInit{
   private taskService = inject(TaskService);

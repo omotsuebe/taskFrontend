@@ -8,15 +8,14 @@ import {MatProgressBar} from "@angular/material/progress-bar";
  * Handles user authentication and form validation.
  */
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    RouterLink,
-    ReactiveFormsModule,
-    MatProgressBar
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    imports: [
+        RouterLink,
+        ReactiveFormsModule,
+        MatProgressBar
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
   private router = inject(Router);
@@ -71,7 +70,7 @@ export class LoginComponent implements OnInit{
     } else {
       this.isLoading = true;
       this.authService.login(this.loginForm.value).subscribe({
-        next: (data: any) => {
+        next: data => {
           if (data.result) {
             this.isLoading = false;
             this.router.navigate(['/dashboard']);
@@ -80,7 +79,7 @@ export class LoginComponent implements OnInit{
             this.errorMsg = data.message;
           }
         },
-        error: (error: any) => {
+        error: error => {
           this.isLoading = false;
           this.errorMsg = error;
         },

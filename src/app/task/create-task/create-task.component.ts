@@ -6,14 +6,13 @@ import {MatProgressBar} from "@angular/material/progress-bar";
 import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
 
 @Component({
-  selector: 'app-create-task',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatProgressBar
-  ],
-  templateUrl: './create-task.component.html',
-  styleUrl: './create-task.component.scss'
+    selector: 'app-create-task',
+    imports: [
+        ReactiveFormsModule,
+        MatProgressBar
+    ],
+    templateUrl: './create-task.component.html',
+    styleUrl: './create-task.component.scss'
 })
 export class CreateTaskComponent implements OnInit {
   private formBuilder = inject(FormBuilder);

@@ -9,16 +9,15 @@ import {MatProgressBar} from "@angular/material/progress-bar";
  * Handles user registration form creation, validation, and submission.
  */
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    RouterLink,
-    MatProgressBar
-  ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+    selector: 'app-register',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        RouterLink,
+        MatProgressBar
+    ],
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit {
   private router = inject(Router);
@@ -77,7 +76,7 @@ export class RegisterComponent implements OnInit {
       this.isLoading = true;
 
       this.authService.register(this.loginForm.value).subscribe({
-        next: (data: any) => {
+        next: data => {
           if (data.result) {
             this.isLoading = false;
             this.successMsg = 'Registration successful.';
@@ -89,7 +88,7 @@ export class RegisterComponent implements OnInit {
             this.errorMsg = 'Registration failed. Please try again.';
           }
         },
-        error: (error: any) => {
+        error: error => {
           this.isLoading = false;
           this.errorMsg = error;
         },
