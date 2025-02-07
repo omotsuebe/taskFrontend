@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {User} from "@core/interfaces/User";
 import {AuthService} from "@core/services/auth.service";
@@ -24,20 +24,11 @@ export class HeaderComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-    this.userProfile();
-  }
-
-  userProfile(){
-    this.isLoading = true;
-    this.authService.profile().subscribe({
-      next: (data: any) => {
-        this.user = data.data;
-        this.isLoading = false;
-      },
-      error: error => {
-        this.isLoading = false;
+    this.authService.currentUser.subscribe(data => {
+      if (data) {
+        this.user = data;
       }
-    })
+    });
   }
 
   logout() {

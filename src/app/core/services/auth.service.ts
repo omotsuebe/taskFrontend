@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, distinctUntilChanged, Observable, of, tap, throwError } from 'rxjs';
 import { ApiService } from '@app/core/services/api.service';
 import { CredentialsService } from '@app/core/services/credentials.service';
-import {HttpClient} from "@angular/common/http";
-
-export interface LoginModel {
-  email: string;
-  password: string;
-  remember?: boolean;
-}
+import { User, LoginModel } from '../interfaces/User';
 
 /**
  * Provides a base for authentication workflow.
@@ -18,11 +12,14 @@ export interface LoginModel {
   providedIn: 'root',
 })
 export class AuthService {
+
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
+
   constructor(
     private credentialsService: CredentialsService,
     private apiService: ApiService,
-    private http: HttpClient
-    ) {}
+  ) { }
 
   /**
    * Authenticates the user.
@@ -33,20 +30,31 @@ export class AuthService {
     return this.apiService.post('/auth/login', loginModel).pipe(
       tap((data) => {
         if (data.result) {
-          this.credentialsService.setCredentials(data, loginModel.remember);
+          this.credentialsService.setCredentials(data, true);
+          this.currentUserSubject.next(data);
+          this.fetchCurrentUser().subscribe();
         }
         return of(true);
       })
     );
   }
 
-  register(user: any) {
-    return this.apiService.post('/auth/register', user);
+  fetchCurrentUser(): Observable<User> {
+    return this.apiService.get('/auth/profile').pipe(
+      tap(user => this.currentUserSubject.next(user.data)),
+      catchError(error => {
+        this.logout();
+        return throwError(() => error);
+      })
+    );
   }
 
-  // profile
-  profile() {
-    return this.apiService.get('/auth/profile');
+  get isAuthenticated(): boolean {
+    return !!this.currentUserSubject.value;
+  }
+
+  register(user: any) {
+    return this.apiService.post('/auth/register', user);
   }
 
   // update profile
@@ -63,9 +71,12 @@ export class AuthService {
    * Logs out the user and clear credentials.
    * @return True if the user was logged out successfully.
    */
-  logout(data: string = ''): Observable<boolean> {
-    this.credentialsService.setCredentials();
-    this.apiService.post('/auth/logout', data);
-    return of(true);
+  logout() {
+    return this.apiService.post('/auth/logout', { logout: '' }).pipe(
+      tap(() => {
+        this.credentialsService.setCredentials();
+        this.currentUserSubject.next(null);
+      })
+    );
   }
 }

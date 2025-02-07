@@ -5,7 +5,6 @@ export interface Credentials {
   token_type: string;
 }
 const credentialsKey = 'app-task-credentials';
-const emailKey = 'userEmail';
 
 @Injectable({
   providedIn: 'root',
@@ -18,14 +17,6 @@ export class CredentialsService {
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
     }
-  }
-
-  /**
-   * Checks is the user is authenticated.
-   * @return True if the user is authenticated.
-   */
-  isAuthenticated(): boolean {
-    return !!this.credentials;
   }
 
   /**
@@ -53,17 +44,6 @@ export class CredentialsService {
       sessionStorage.removeItem(credentialsKey);
       localStorage.removeItem(credentialsKey);
     }
-  }
-
-  //user Email key
-  storeEmail(data: any) {
-    localStorage.setItem(emailKey, data);
-  }
-  get getEmail() {
-    return localStorage.getItem(emailKey);
-  }
-  deleteEmail() {
-    localStorage.removeItem(emailKey);
   }
 
 }

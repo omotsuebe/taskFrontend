@@ -1,12 +1,19 @@
-import {inject} from '@angular/core';
-import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
-import {CredentialsService} from '@app/core/services/credentials.service';
+import { inject } from '@angular/core';
+import {Router, RouterStateSnapshot} from '@angular/router';
+import { AuthService } from '@app/core/services/auth.service';
 
 export const AuthGuard = (
-  route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot,
   router = inject(Router),
-  credentialsService = inject(CredentialsService)) => {
-  credentialsService.isAuthenticated() ? true : router.navigate(['/login'], { queryParams: { redirect: state.url }, replaceUrl: true });
+  authService = inject(AuthService)
+): boolean => {
+  if (authService?.isAuthenticated) {
+    return true;
+  } else {
+    router.navigate(['/login'], {
+      queryParams: { redirect: state.url },
+      replaceUrl: true,
+    });
+    return false;
+  }
 };
-

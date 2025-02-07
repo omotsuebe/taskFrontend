@@ -59,7 +59,7 @@ export class CreateTaskComponent implements OnInit {
       // Set to true if editing an existing task
       this.taskForm = this.formBuilder.group({
         id: [this.task.id],
-        status: [1],
+        status: [this.task.status],
         name: [this.task.name, Validators.required],
         project_type: [this.task.project_type, Validators.required],
         priority: [this.task.priority, Validators.required],

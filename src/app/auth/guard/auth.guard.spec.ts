@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AuthGuard } from './auth.guard';
-import { CredentialsService } from '@app/core/services/credentials.service';
+import { AuthService } from '@app/core/services/auth.service';
 
 describe('AuthGuard', () => {
   let router: Router;
-  let credentialsService: jasmine.SpyObj<CredentialsService>;
+  let authService: jasmine.SpyObj<AuthService>;
 
   beforeEach(() => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
@@ -14,12 +14,12 @@ describe('AuthGuard', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: Router, useValue: routerSpy },
-        { provide: CredentialsService, useValue: credentialsSpy }
+        { provide: authService, useValue: credentialsSpy }
       ]
     });
 
     router = TestBed.inject(Router);
-    credentialsService = TestBed.inject(CredentialsService) as jasmine.SpyObj<CredentialsService>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
   });
 
   it('should have a canActivate method', () => {

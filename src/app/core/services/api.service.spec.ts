@@ -15,7 +15,7 @@ describe('ApiService', () => {
     service = TestBed.inject(ApiService);
   });
 
-  it('should be created', () => {
+  it('Api service should be created', () => {
     expect(service).toBeTruthy();
   });
 });

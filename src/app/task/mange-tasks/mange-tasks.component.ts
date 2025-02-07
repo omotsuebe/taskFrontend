@@ -19,7 +19,7 @@ import {CreateTaskComponent} from "@app/task/create-task/create-task.component";
 @Component({
   selector: 'app-mange-tasks',
   standalone: true,
-  imports: [CdkDropList, CdkDrag, DialogModule, CreateTaskComponent, CdkDragPlaceholder],
+  imports: [CdkDropList, CdkDrag, DialogModule, CdkDragPlaceholder],
   templateUrl: './mange-tasks.component.html',
   styleUrl: './mange-tasks.component.scss'
 })
@@ -52,7 +52,7 @@ export class MangeTasksComponent implements OnInit{
    */
   openDialog(task: any) {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
-      minWidth: '500px',
+      width: '500px',
       autoFocus: false,
       data: {
         task: task,
@@ -112,6 +112,7 @@ export class MangeTasksComponent implements OnInit{
         this.isLoading = false;
       },
       error: error => {
+        // Handle error
         this.isLoading = false;
       }
     });
@@ -141,6 +142,5 @@ export class MangeTasksComponent implements OnInit{
     this.task = task;
     this.openDialog(task);
   }
-
 
 }
