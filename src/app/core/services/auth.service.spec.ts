@@ -18,4 +18,24 @@ describe('AuthService', () => {
   it('auth should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('auth should have a login method', () => {
+    expect(service.login).toBeTruthy();
+  });
+
+  it('auth should have a register method', () => {
+    expect(service.register).toBeTruthy();
+  });
+
+  it('auth should have a logout method', () => {
+    expect(service.logout).toBeTruthy();
+  });
+
+  it('auth should have a fetchCurrentUser method', () => {
+    expect(service.fetchCurrentUser).toBeTruthy();
+  });
+
+  it('auth should have an isAuthenticated property', () => {
+    expect(service.isAuthenticated).toBeDefined();
+  });
 });

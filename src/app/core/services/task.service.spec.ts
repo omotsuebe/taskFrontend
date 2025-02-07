@@ -19,4 +19,25 @@ describe('TaskService', () => {
   it('Task should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('Task should have a create method', () => {
+    expect(service.getTasks).toBeTruthy();
+  });
+
+  it('Task should have a get method', () => {
+    expect(service.createTask).toBeTruthy();
+  });
+
+  it('Task should have a update method', () => {
+    expect(service.updateTask).toBeTruthy();
+  });
+
+  it('Task should have multiple on drag and drop method', () => {
+    expect(service.updateTasks).toBeTruthy();
+  });
+
+  it('Task should have a delete method', () => {
+    expect(service.deleteTask).toBeTruthy();
+  });
+
 });
