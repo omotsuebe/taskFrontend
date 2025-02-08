@@ -23,9 +23,9 @@ export class LoginComponent implements OnInit{
   private authService = inject(AuthService);
 
 
-  loginForm!: FormGroup; // Form group for the login form
-  isLoading = false; // Indicates if a request is in progress
-  submitted = false; // Indicates if the form has been submitted
+  loginForm!: FormGroup;
+  isLoading = false;
+  submitted = false;
   errorMsg: any;
 
   /**

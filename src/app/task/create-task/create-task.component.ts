@@ -21,14 +21,14 @@ export class CreateTaskComponent implements OnInit {
   data = inject(DIALOG_DATA);
 
 
-  task!: Task; // Task data to be edited or created
-  taskForm!: FormGroup; // Reactive form group for task data
-  isLoading = false; // Indicates if a request is in progress
-  submitted = false; // Indicates if the form has been submitted
-  errorMsg: any; // Stores error messages
-  successMsg: any; // Stores success messages
-  isForm = false; // Indicates if the form is for editing or creating
-  dialogRef = inject(DialogRef); // Dialog reference for closing the dialog
+  task!: Task;
+  taskForm!: FormGroup;
+  isLoading = false;
+  submitted = false;
+  errorMsg: any;
+  successMsg: any;
+  isForm = false;
+  dialogRef = inject(DialogRef);
 
   /**
    * Constructor for the CreateTaskComponent.

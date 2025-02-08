@@ -25,10 +25,10 @@ export class RegisterComponent implements OnInit {
   private authService = inject(AuthService);
 
 
-  registerForm!: FormGroup; // Form group for the registration form
-  isLoading = false; // Indicates if a request is in progress
-  submitted = false; // Indicates if the form has been submitted
-  errorMsg: any; // Holds error messages
+  registerForm!: FormGroup;
+  isLoading = false;
+  submitted = false;
+  errorMsg: any;
   successMsg: any;
 
   /**
